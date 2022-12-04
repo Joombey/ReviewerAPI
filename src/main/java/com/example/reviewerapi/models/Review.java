@@ -14,4 +14,28 @@ public class Review {
         this.item = item;
         this.paragraphs = paragraphs;
     }
+
+    public ReviewId getId() {
+        return id;
+    }
+
+    public void setId(ReviewId id) {
+        this.id = id;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public String getParagraphs() {
+        return paragraphs;
+    }
+
+    public void setParagraphs(String paragraphs) {
+        this.paragraphs = paragraphs;
+    }
 }

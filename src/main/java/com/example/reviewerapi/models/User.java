@@ -13,4 +13,28 @@ public class User {
         this.city = city;
         this.role = role;
     }
+
+    public UserId getId() {
+        return id;
+    }
+
+    public void setId(UserId id) {
+        this.id = id;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

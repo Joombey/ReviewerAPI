@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
     @PostMapping("/sign-in")
-    public ResponseEntity<?> auth(User user){
+    public ResponseEntity<?> auth(@RequestBody User user){
         try {
             System.out.println(user.id.login);
             UserAndPermission userAndPermission = Mock.tryAuth(user.id);
@@ -23,7 +23,7 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(User user){
+    public ResponseEntity<?> signUp(@RequestBody User user){
         try {
             UserAndPermission newUser = Mock.trySignUp(user);
             return ResponseEntity.ok().body(newUser);

@@ -30,6 +30,7 @@ public class Mock {
 
     public static UserAndPermission trySignUp(User newUser) throws UserAlreadyExistException{
         try {
+            System.out.println(newUser.id);
             if (tryAuth(newUser.id) != null) throw new UserAlreadyExistException("User already exists");
             return null;
         } catch (NoUserFoundException e){
