@@ -6,12 +6,12 @@ public class User {
     public UserId id;
 
     public String city;
-    public String role;
+    public String avatar;
 
-    public User(UserId id, String city, String role) {
+    public User(UserId id, String city, String role, String avatar) {
         this.id = id;
         this.city = city;
-        this.role = role;
+        this.avatar = avatar;
     }
 
     public UserId getId() {
@@ -30,11 +30,11 @@ public class User {
         this.city = city;
     }
 
-    public String getRole() {
-        return role;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

@@ -21,6 +21,7 @@ public class Mock {
 
 
     public static UserAndPermission tryAuth(UserId id) throws NoUserFoundException {
+        System.out.println(id.login + " " + id.password);
         List<User> tempList = userList.stream().filter(user -> user.id.equals(id)).collect(Collectors.toList());
         if(tempList.size() != 0) {
             return new UserAndPermission(tempList.get(0));
