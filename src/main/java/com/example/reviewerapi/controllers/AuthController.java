@@ -3,8 +3,8 @@ package com.example.reviewerapi.controllers;
 import com.example.reviewerapi.Mock;
 import com.example.reviewerapi.exceptions.NoUserFoundException;
 import com.example.reviewerapi.exceptions.UserAlreadyExistException;
-import com.example.reviewerapi.models.User;
-import com.example.reviewerapi.models.UserAndPermission;
+import com.example.reviewerapi.requests.UserRequest;
+import com.example.reviewerapi.responses.UserAndPermissionResponse;
 import com.example.reviewerapi.models.embedable.UserId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,17 +16,17 @@ public class AuthController {
     public ResponseEntity<?> auth(@RequestBody UserId user){
         try {
             System.out.println(user.login);
-            UserAndPermission userAndPermission = Mock.tryAuth(user);
-            return ResponseEntity.ok().body(userAndPermission);
+            UserAndPermissionResponse userAndPermissionResponse = Mock.tryAuth(user);
+            return ResponseEntity.ok().body(userAndPermissionResponse);
         } catch (NoUserFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@RequestBody User user){
+    public ResponseEntity<?> signUp(@RequestBody UserRequest userRequest){
         try {
-            UserAndPermission newUser = Mock.trySignUp(user);
+            UserAndPermissionResponse newUser = Mock.trySignUp(userRequest);
             return ResponseEntity.ok().body(newUser);
         } catch (UserAlreadyExistException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -2,8 +2,6 @@ package com.example.reviewerapi.models;
 
 import com.example.reviewerapi.models.embedable.ReviewId;
 
-import java.util.Objects;
-
 public class Review {
     public ReviewId id;
     public String item;

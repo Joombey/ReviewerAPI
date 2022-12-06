@@ -1,4 +1,6 @@
-package com.example.reviewerapi.models;
+package com.example.reviewerapi.responses;
+
+import com.example.reviewerapi.models.User;
 
 public class UserResponse {
     public String name;
@@ -11,6 +13,13 @@ public class UserResponse {
         this.city = city;
         this.role = role;
         this.avatar = avatar;
+    }
+
+    public UserResponse(User user) {
+        this.name = user.getId().login;
+        this.city = user.getCity();
+        this.role = user.getRole();
+        this.avatar = user.getAvatar();
     }
 
     public String getName() {
