@@ -33,7 +33,6 @@ public class Mock {
     }
 
     public static UserAndPermissionResponse tryAuth(UserId id) throws NoUserFoundException {
-        System.out.println(id.login + " " + id.password);
         List<User> tempList = userList.stream().filter(user -> user.getId().equals(id)).collect(Collectors.toList());
         if(tempList.size() != 0) {
             return new UserAndPermissionResponse(tempList.get(0));
@@ -43,7 +42,6 @@ public class Mock {
 
     public static UserAndPermissionResponse trySignUp(UserRequest newUserRequest) throws UserAlreadyExistException{
         try {
-            System.out.println(newUserRequest.id);
             if (tryAuth(newUserRequest.id) != null) throw new UserAlreadyExistException("UserRequest already exists");
             return null;
         } catch (NoUserFoundException e){
@@ -82,9 +80,10 @@ public class Mock {
         User moder = findUser(moderName);
         if(Permission.getPermissionByRoleName(moder.getRole()).getReviewBlockAccess()) {
             removeReport(reportId);
-            removeReport(reportId);
+            removeReview(reportId);
             return new ReportsWithReviewsResponse(reportList, reviewList);
-        }throw new NoPermissionException("Нет прав на действие");
+        }
+        throw new NoPermissionException("Нет прав на действие");
     }
 
     public static List<Report> deny(int reportId, String moderName){
@@ -102,11 +101,7 @@ public class Mock {
                 break;
             }
         }
-        List<UserResponse> resultList = new ArrayList<>();
-
-        for(User userEl: userList){
-            resultList.add(new UserResponse(userEl));
-        } return resultList;
+        return userList.stream().map(userEl -> new UserResponse(userEl)).toList();
     }
 
     public static UserAndPermissionResponse changeRole(String user, String newRole, String admin) throws WrongRoleException, NoPermissionException {

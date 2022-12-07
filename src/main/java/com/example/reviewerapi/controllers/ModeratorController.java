@@ -4,12 +4,12 @@ import com.example.reviewerapi.Mock;
 import com.example.reviewerapi.exceptions.NoPermissionException;
 import com.example.reviewerapi.requests.Report;
 import com.example.reviewerapi.responses.ReportsWithReviewsResponse;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 @RequestMapping("/moderator")
 public class ModeratorController {
     @PostMapping("/review-block")
@@ -18,6 +18,7 @@ public class ModeratorController {
             @RequestParam("moder") String moderatorName
     ){
         try {
+            System.out.println(reportId + " " + moderatorName);
             ReportsWithReviewsResponse reportsWithReviewsResponse = Mock.blockReview(reportId, moderatorName);
             return ResponseEntity.ok().body(reportsWithReviewsResponse);
         } catch (NoPermissionException e) {
