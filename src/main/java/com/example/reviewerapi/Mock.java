@@ -24,7 +24,6 @@ public class Mock {
     public static List<User> userList = new ArrayList<>();
     public static List<Review> reviewList = new ArrayList<>();
     public static List<Report> reportList = new ArrayList<>();
-    public static Map<Integer, Report> requestMap = new HashMap<>();
 
     public static void init(){
         userList.add(new User(new UserId("admin", "admin"), "asd", Permission.ADMIN.getRole(), Permission.ADMIN.getRole()));
@@ -86,12 +85,12 @@ public class Mock {
         throw new NoPermissionException("Нет прав на действие");
     }
 
-    public static List<Report> deny(int reportId, String moderName){
+    public static List<Report> deny(int reportId, String moderName) throws NoPermissionException{
         User moderUser = findUser(moderName);
         if(Permission.getPermissionByRoleName(moderName).getReviewBlockAccess()){
             removeReport(reportId);
-        }
-        return reportList;
+            return reportList;
+        } throw new NoPermissionException("Нет прав на действия");
     }
 
     public static List<UserResponse> banUser(UserId user){

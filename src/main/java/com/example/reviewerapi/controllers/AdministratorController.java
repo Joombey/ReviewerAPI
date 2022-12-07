@@ -6,11 +6,16 @@ import com.example.reviewerapi.exceptions.NoUserFoundException;
 import com.example.reviewerapi.exceptions.WrongRoleException;
 import com.example.reviewerapi.responses.UserAndPermissionResponse;
 import com.example.reviewerapi.responses.UserResponse;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@ControllerAdvice
 @RestController
 @RequestMapping("/admin")
 public class AdministratorController {
@@ -30,6 +35,12 @@ public class AdministratorController {
         }
     }
 
+    @ApiResponses({
+            @ApiResponse(description = "Возврщает список пользователей, если имеется доступ", responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = UserResponse[].class))),
+            @ApiResponse(description = "Возвращается сообщение о том что прав на действия нет", responseCode = "403"),
+            @ApiResponse(description = "Возвращается сообщение о том такого пользователья нет", responseCode = "400")
+    })
     @RequestMapping("/ban/{userLogin}")
     public ResponseEntity ban(
             @PathVariable("userLogin") String user,
@@ -45,6 +56,11 @@ public class AdministratorController {
         }
     }
 
+    @ApiResponses({
+            @ApiResponse(description = "Возврщает список пользователей, если имеется доступ", responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = UserAndPermissionResponse.class))),
+            @ApiResponse(description = "Возвращается сообщение о том что прав на действия нет", responseCode = "400")
+    })
     @GetMapping("/user-list")
     public ResponseEntity getUsersForRoleChanger(
             @RequestParam("admin") String admin
