@@ -19,6 +19,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 public class AdministratorController {
+
+    @ApiResponses({
+            @ApiResponse(description = "Возврщает пользователя с новыми правами, если имеется доступ", responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = UserResponse.class, description = "Пользователь и его разрешения"))),
+            @ApiResponse(description = "Возвращается сообщение о том что прав на действия нет", responseCode = "403"),
+            @ApiResponse(description = "Возвращается сообщение о том такого пользователья нет", responseCode = "400")
+    })
     @RequestMapping("/change-role/{userLogin}")
     public ResponseEntity changeRole(
             @PathVariable("userLogin") String userLogin,
@@ -37,7 +44,7 @@ public class AdministratorController {
 
     @ApiResponses({
             @ApiResponse(description = "Возврщает список пользователей, если имеется доступ", responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = UserResponse[].class))),
+                    content = @Content(schema = @Schema(implementation = UserResponse.class, description = "Список пользователей"))),
             @ApiResponse(description = "Возвращается сообщение о том что прав на действия нет", responseCode = "403"),
             @ApiResponse(description = "Возвращается сообщение о том такого пользователья нет", responseCode = "400")
     })
@@ -58,7 +65,7 @@ public class AdministratorController {
 
     @ApiResponses({
             @ApiResponse(description = "Возврщает список пользователей, если имеется доступ", responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = UserAndPermissionResponse.class))),
+                    content = @Content(schema = @Schema(implementation = UserResponse.class, description = "Пользователь и его разрешения"))),
             @ApiResponse(description = "Возвращается сообщение о том что прав на действия нет", responseCode = "400")
     })
     @GetMapping("/user-list")

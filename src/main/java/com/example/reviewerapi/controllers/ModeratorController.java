@@ -23,7 +23,7 @@ public class ModeratorController {
 
     @ApiResponses({
             @ApiResponse(description = "Возврщает новый список жалоб вместе со списком отзывов на которые были произведены жалобы, после блокировки удаления отзыва и жалобы", responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = ReportsWithReviewsResponse.class))),
+                    content = @Content(schema = @Schema(implementation = ReportsWithReviewsResponse.class, description = "Список жалоб с соответствующими отзывами"))),
             @ApiResponse(description = "Возвращается сообщение о том что на указанные действия у пользователя нет прав", responseCode = "403")
     })
     @PostMapping("/review-block")
@@ -41,7 +41,7 @@ public class ModeratorController {
 
     @ApiResponses({
             @ApiResponse(description = "Возврщает новый список жалоб, после отклонения (удаления) жалобы", responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = Report[].class))),
+                    content = @Content(schema = @Schema(implementation = Report.class, description = "Список жалоб"))),
             @ApiResponse(description = "Возвращается сообщение о том что на указанные действия у пользователя нет прав", responseCode = "403")
     })
     @PostMapping("/report-deny/{reportId}")
@@ -59,7 +59,7 @@ public class ModeratorController {
 
     @ApiResponses({
             @ApiResponse(description = "Возврщает список жалоб", responseCode = "200",
-            content = @Content(schema = @Schema(implementation = Report[].class))),
+            content = @Content(schema = @Schema(implementation = Report.class, description = "Список жалоб"))),
             @ApiResponse(description = "Возвращается сообщение о том что на указанные действия у пользователя нет прав", responseCode = "403")
     })
     @GetMapping("/report-list")

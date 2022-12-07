@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     @ApiResponses({
             @ApiResponse(description = "Аутентификация пользователья, после которой возвращаются данные о его роли и о нём самом", responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = UserAndPermissionResponse.class))),
+                    content = @Content(schema = @Schema(implementation = UserAndPermissionResponse.class, description = "Пользователь и его разрешения"))),
             @ApiResponse(description = "Возвращается сообщение о том что аутентификация не пройдена", responseCode = "400")
     })
     @PostMapping("/sign-in")
@@ -36,7 +36,7 @@ public class AuthController {
 
     @ApiResponses({
             @ApiResponse(description = "Регистрация, после которой возвращаются данные о его роли и о нём самом", responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = UserAndPermissionResponse.class))),
+                    content = @Content(schema = @Schema(implementation = UserAndPermissionResponse.class, description = "Пользователь и его разрешения"))),
             @ApiResponse(description = "Возвращается сообщение о том что такой пользователь уже существует", responseCode = "400")
     })
     @PostMapping("/sign-up")
