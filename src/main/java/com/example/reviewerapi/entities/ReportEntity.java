@@ -1,31 +1,33 @@
 package com.example.reviewerapi.entities;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Target;
 
 @Entity
 @Table(name = "reports")
 public class ReportEntity {
     @Id
-    @OneToOne(targetEntity = ReviewEntity.class)
-    @Column(name = "id", nullable = false)
-    private int reviewId;
+    @OneToOne
+    @JoinColumn(name = "report_id")
+    private int report_id;
 
-    @Column(name = "report_amount", nullable = false)
-    private int reportAmt;
-    public int getReviewId() {
-        return reviewId;
+    @Column(nullable = false)
+    private int report_amount;
+
+    public int getReport_id() {
+        return report_id;
     }
 
-    public void setReviewId(int reviewId) {
-        this.reviewId = reviewId;
+    public void setReport_id(int report_id) {
+        this.report_id = report_id;
     }
 
-    public int getReportAmt() {
-        return reportAmt;
+    public int getReport_amount() {
+        return report_amount;
     }
 
-    public void setReportAmt(int reportAmt) {
-        this.reportAmt = reportAmt;
+    public void setReport_amount(int report_amount) {
+        this.report_amount = report_amount;
     }
+
+
 }
