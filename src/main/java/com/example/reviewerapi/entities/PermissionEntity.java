@@ -1,5 +1,6 @@
 package com.example.reviewerapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -15,8 +16,24 @@ public class PermissionEntity {
     private Boolean review_block_access;
     private Boolean role_changer_access;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "role")
     private List<UserEntity> userList;
+
+    public PermissionEntity() {
+    }
+
+    public PermissionEntity(String role,
+                            Boolean review_maker_access,
+                            Boolean profile_access,
+                            Boolean review_block_access,
+                            Boolean role_changer_access) {
+        this.role = role;
+        this.review_maker_access = review_maker_access;
+        this.profile_access = profile_access;
+        this.review_block_access = review_block_access;
+        this.role_changer_access = role_changer_access;
+    }
 
     public String getRole() {
         return role;

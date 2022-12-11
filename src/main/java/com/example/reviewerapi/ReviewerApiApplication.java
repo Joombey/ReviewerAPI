@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ReviewerApiApplication {
 
 	public static void main(String[] args) {
-		Mock.init();
 		SpringApplication.run(ReviewerApiApplication.class, args);
 	}
 

@@ -1,5 +1,8 @@
 package com.example.reviewerapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,12 +17,24 @@ public class UserEntity {
     private String city;
     private String avatar;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "role")
     private PermissionEntity role;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<ReviewEntity> reviewList;
+
+    public UserEntity(String login, String password, String city, String avatar, PermissionEntity role) {
+        this.login = login;
+        this.password = password;
+        this.city = city;
+        this.avatar = avatar;
+        this.role = role;
+    }
+
+    public UserEntity() {}
 
     public String getLogin() {
         return login;

@@ -1,16 +1,18 @@
 package com.example.reviewerapi.controllers;
 
-import com.example.reviewerapi.Mock;
+//import com.example.reviewerapi.Mock;
 import com.example.reviewerapi.exceptions.NoPermissionException;
 import com.example.reviewerapi.exceptions.NoUserFoundException;
 import com.example.reviewerapi.requests.Report;
 import com.example.reviewerapi.responses.ReportsWithReviewsResponse;
+import com.example.reviewerapi.services.ModeratorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/moderator")
 public class ModeratorController {
+
+    @Autowired
+    ModeratorService moderatorService;
 
     @ApiResponses({
             @ApiResponse(description = "Возврщает новый список жалоб вместе со списком отзывов на которые были произведены жалобы, после блокировки удаления отзыва и жалобы", responseCode = "200",
@@ -32,7 +37,7 @@ public class ModeratorController {
             @RequestParam("moder") String moderatorName
     ){
         try {
-            ReportsWithReviewsResponse reportsWithReviewsResponse = Mock.blockReview(reportId, moderatorName);
+            ReportsWithReviewsResponse reportsWithReviewsResponse = moderatorService.blockReview(reportId, moderatorName);
             return ResponseEntity.ok().body(reportsWithReviewsResponse);
         } catch (NoPermissionException e) {
             return ResponseEntity.status(403).body(e.getMessage());
@@ -50,7 +55,7 @@ public class ModeratorController {
             @RequestParam("moder") String moderName
     ){
         try {
-            List<Report> newReportList = Mock.deny(reportId, moderName);
+            List<Report> newReportList = moderatorService.denyReport(reportId, moderName);
             return ResponseEntity.ok().body(newReportList);
         } catch (NoPermissionException e) {
             return ResponseEntity.status(403).body(e.getMessage());
@@ -65,7 +70,7 @@ public class ModeratorController {
     @GetMapping("/report-list")
     public ResponseEntity getReportList(@RequestParam("moder") String moderName){
         try {
-            return ResponseEntity.ok().body(Mock.getResponseList(moderName));
+            return ResponseEntity.ok().body(moderatorService.getReportList(moderName));
         } catch (NoPermissionException e) {
             return ResponseEntity.status(403).body(e.getMessage());
         }

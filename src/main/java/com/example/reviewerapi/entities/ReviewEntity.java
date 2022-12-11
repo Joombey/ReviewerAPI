@@ -1,15 +1,17 @@
 package com.example.reviewerapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.Constraint;
 
 @Entity
 @Table(name = "reviews")
 public class ReviewEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "author")
     private UserEntity author;
@@ -19,10 +21,11 @@ public class ReviewEntity {
     private String creation_time;
     private String review_title;
 
-    @OneToOne(mappedBy = "report_id", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OneToOne(mappedBy = "review", cascade = CascadeType.ALL)
     private ReportEntity report;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

@@ -5,6 +5,12 @@ public class Report {
         this.id = id;
         reportAmt = 1;
     }
+
+    public Report(int id, int reportAmt) {
+        this.id = id;
+        this.reportAmt = reportAmt;
+    }
+
     public int id;
     public int reportAmt;
 }
