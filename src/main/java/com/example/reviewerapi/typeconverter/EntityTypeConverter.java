@@ -15,7 +15,7 @@ import java.util.List;
 public class EntityTypeConverter {
     public static List<Report> toReportList(List<ReportEntity> reports){
         return reports.stream().map(reportEntity -> new Report(
-                reportEntity.getReport_id().getId(), reportEntity.getReport_amount()
+                reportEntity.getReview().getId(), reportEntity.getReportAmt()
         )).toList();
     }
 

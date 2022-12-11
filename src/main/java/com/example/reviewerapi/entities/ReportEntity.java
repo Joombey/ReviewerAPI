@@ -16,8 +16,8 @@ public class ReportEntity {
     @JoinColumn(name = "review_id")
     private ReviewEntity review;
 
-    @Column(nullable = false)
-    private Integer report_amount;
+    @Column(nullable = false, name = "report_amount")
+    private Integer reportAmt;
 
     public Integer getId() {
         return id;
@@ -27,19 +27,23 @@ public class ReportEntity {
         this.id = id;
     }
 
-    public ReviewEntity getReport_id() {
+    public ReviewEntity getReview() {
         return review;
     }
 
-    public void setReport_id(ReviewEntity report_id) {
-        this.review = report_id;
+    public void setReview(ReviewEntity review) {
+        this.review = review;
     }
 
-    public Integer getReport_amount() {
-        return report_amount;
+    public Integer getReportAmt() {
+        return reportAmt;
     }
 
-    public void setReport_amount(Integer report_amount) {
-        this.report_amount = report_amount;
+    public void setReportAmt(Integer report_amount) {
+        this.reportAmt = report_amount;
+    }
+
+    public void newReport(){
+        this.reportAmt += 1;
     }
 }

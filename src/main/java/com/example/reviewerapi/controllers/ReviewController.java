@@ -54,6 +54,7 @@ public class ReviewController {
     public ResponseEntity reportReview(
             @RequestParam("review_id") int reviewId
     ){
+        System.out.println(reviewId);
         List<Report> newReportList = reviewService.report(reviewId);
         return ResponseEntity.ok().body(newReportList);
     }

@@ -11,7 +11,4 @@ public interface ReviewEntityRepository extends JpaRepository<ReviewEntity, Inte
     List<ReviewEntity> findByAuthor_Login(String login);
 
     List<ReviewEntity> findByAuthor_LoginNot(String login);
-
-
-
 }

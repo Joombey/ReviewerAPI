@@ -1,11 +1,9 @@
 package com.example.reviewerapi.services;
 
-import com.example.reviewerapi.entities.PermissionEntity;
 import com.example.reviewerapi.entities.UserEntity;
 import com.example.reviewerapi.exceptions.NoPermissionException;
 import com.example.reviewerapi.exceptions.NoUserFoundException;
 import com.example.reviewerapi.models.Permission;
-import com.example.reviewerapi.models.User;
 import com.example.reviewerapi.repositories.PermissionEntityRepository;
 import com.example.reviewerapi.repositories.UserEntityRepository;
 import com.example.reviewerapi.responses.UserAndPermissionResponse;
@@ -30,7 +28,7 @@ public class AdminService {
         Optional<UserEntity> userInstance = userRepo.findById(user);
 
         if (adminInstance.isPresent() || !userInstance.isPresent()) {
-            if(adminInstance.get().getRole().getRole_changer_access()){
+            if(adminInstance.get().getRole().getRoleChangerAccess()){
                 userInstance.get().setRole(permissionRepo.findById(newRole).get());
                 return new UserAndPermissionResponse(userRepo.save(userInstance.get()));
             }throw new NoPermissionException();
@@ -42,7 +40,7 @@ public class AdminService {
 
         Optional<UserEntity> adminInstance = userRepo.findById(admin);
 
-        if (adminInstance.isPresent() && adminInstance.get().getRole().getRole_changer_access()){
+        if (adminInstance.isPresent() && adminInstance.get().getRole().getRoleChangerAccess()){
             userRepo.deleteById(user);
             return userRepo.findAll().stream().map(userInstance -> new UserResponse(userInstance)).toList();
         }throw new NoPermissionException();
@@ -54,9 +52,9 @@ public class AdminService {
         permissionRepo.save(Permission.USER.getPermissionEntityInstance());
         permissionRepo.save(Permission.UNAUTHORIZED.getPermissionEntityInstance());
 
-        userRepo.save(new UserEntity("admin", "admin", "MOSCOW", "ASDASD", Permission.USER.getPermissionEntityInstance()));
+        userRepo.save(new UserEntity("admin", "admin", "MOSCOW", "ASDASD", Permission.ADMIN.getPermissionEntityInstance()));
         userRepo.save(new UserEntity("user", "user", "MOSCOW", "ASDASD", Permission.USER.getPermissionEntityInstance()));
-        userRepo.save(new UserEntity("moder", "moder", "MOSCOW", "ASDASD", Permission.USER.getPermissionEntityInstance()));
+        userRepo.save(new UserEntity("moder", "moder", "MOSCOW", "ASDASD", Permission.MODER.getPermissionEntityInstance()));
     }
 
     public List<UserResponse> getUserList(String adminName) throws NoPermissionException {

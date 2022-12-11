@@ -19,7 +19,7 @@ public class UserEntity {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "role")
+    @JoinColumn(name = "role", referencedColumnName = "role")
     private PermissionEntity role;
 
     @JsonManagedReference

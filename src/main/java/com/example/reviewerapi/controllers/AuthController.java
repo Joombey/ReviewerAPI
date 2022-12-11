@@ -31,8 +31,10 @@ public class AuthController {
     })
     @PostMapping("/sign-in")
     public ResponseEntity<?> auth(@RequestBody UserId user){
+//        System.out.println(user.login);
         try {
             UserAndPermissionResponse userAndPermissionResponse = authService.auth(user);
+//            System.out.println(userAndPermissionResponse.user.name + " " + userAndPermissionResponse.permission.getRole());
             return ResponseEntity.ok().body(userAndPermissionResponse);
         } catch (NoUserFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());

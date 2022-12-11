@@ -47,12 +47,16 @@ public class ReviewService {
     }
 
     public List<Report> report(int reviewId){
-        if (!reportRepo.existsById(reviewId)) {
-            ReportEntity report = new ReportEntity();
-            report.setReport_id(reviewRepo.findById(reviewId).get());
-            report.setReport_amount(1);
-            reportRepo.save(report);
+        ReportEntity report;
+        if (!reportRepo.existsByReviewId(reviewId)) {
+            report = new ReportEntity();
+            report.setReview(reviewRepo.findById(reviewId).get());
+            report.setReportAmt(1);
+        } else{
+            report = reportRepo.findByReviewId(reviewId);
+            report.newReport();
         }
+        reportRepo.save(report);
         return EntityTypeConverter.toReportList(reportRepo.findAll());
     }
 }

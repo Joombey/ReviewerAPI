@@ -29,7 +29,7 @@ public class ModeratorService {
     UserEntityRepository userRepo;
 
     public ReportsWithReviewsResponse blockReview(int reportId, String moderatorName) throws NoPermissionException{
-        if (userRepo.existsByLoginAndRole_Role(moderatorName, "moder")){
+        if (userRepo.existByLoginAndRole(moderatorName, "moder")){
             reviewRepo.deleteById(reportId);
             return new ReportsWithReviewsResponse(
                     EntityTypeConverter.toReportList(reportRepo.findAll()),
@@ -39,14 +39,14 @@ public class ModeratorService {
     }
 
     public List<Report> denyReport(int reviewId, String moderatorName) throws NoPermissionException{
-        if (userRepo.existsByLoginAndRole_Role(moderatorName, "moder")) {
-            reportRepo.deleteByReview_Id(reviewId);
+        if (userRepo.existByLoginAndRole(moderatorName, "moder")) {
+            reportRepo.deleteByReviewId(reviewId);
             return EntityTypeConverter.toReportList(reportRepo.findAll());
         }throw new NoPermissionException();
     }
 
     public List<Report> getReportList(String moderatorName) throws NoPermissionException{
-        if (userRepo.existsByLoginAndRole_Role(moderatorName, "moder")){
+        if (userRepo.existByLoginAndRole(moderatorName, "moder")){
             return EntityTypeConverter.toReportList(reportRepo.findAll());
         } throw new NoPermissionException();
     }
