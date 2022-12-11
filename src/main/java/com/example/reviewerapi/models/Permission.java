@@ -1,5 +1,7 @@
 package com.example.reviewerapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Permission {
     public Permission(){}
     Permission(Builder builder){
@@ -37,11 +39,69 @@ public class Permission {
     public static final boolean ACCESS = true;
     public static final boolean DENY = false;
 
-    public transient String role;
-    public transient boolean reviewMakerAccess;
-    public transient boolean profileAccess;
-    public transient boolean reviewBlockAccess;
-    public transient boolean roleChangerAccess;
+    private String role;
+    private boolean reviewMakerAccess;
+    private boolean profileAccess;
+    private boolean reviewBlockAccess;
+    private boolean roleChangerAccess;
+
+    public Permission(String role, boolean reviewMakerAccess, boolean profileAccess, boolean reviewBlockAccess, boolean roleChangerAccess) {
+        this.role = role;
+        this.reviewMakerAccess = reviewMakerAccess;
+        this.profileAccess = profileAccess;
+        this.reviewBlockAccess = reviewBlockAccess;
+        this.roleChangerAccess = roleChangerAccess;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public boolean getReviewMakerAccess() {
+        return reviewMakerAccess;
+    }
+
+    public void setReviewMakerAccess(boolean reviewMakerAccess) {
+        this.reviewMakerAccess = reviewMakerAccess;
+    }
+
+    public boolean getProfileAccess() {
+        return profileAccess;
+    }
+
+    public void setProfileAccess(boolean profileAccess) {
+        this.profileAccess = profileAccess;
+    }
+
+    public boolean getReviewBlockAccess() {
+        return reviewBlockAccess;
+    }
+
+    public void setReviewBlockAccess(boolean reviewBlockAccess) {
+        this.reviewBlockAccess = reviewBlockAccess;
+    }
+
+    public boolean getRoleChangerAccess() {
+        return roleChangerAccess;
+    }
+
+    public void setRoleChangerAccess(boolean roleChangerAccess) {
+        this.roleChangerAccess = roleChangerAccess;
+    }
+
+    public static Permission getPermissionByRoleName(String newRole) {
+        switch (newRole){
+            case "moder": return MODER;
+            case "user": return USER;
+            case "admin": return ADMIN;
+            default: return null;
+        }
+    }
+
 
     public static class Builder{
         String role;
@@ -86,6 +146,7 @@ public class Permission {
         }
     }
 
+    @JsonIgnore
     public PermissionModel getPermissionEntityInstance(){
         return new PermissionModel(
                 role,

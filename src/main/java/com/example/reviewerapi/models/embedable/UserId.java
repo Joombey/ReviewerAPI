@@ -18,4 +18,20 @@ public class UserId {
         UserId userId = (UserId) o;
         return login.equals(userId.login) && password.equals(userId.password);
     }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
