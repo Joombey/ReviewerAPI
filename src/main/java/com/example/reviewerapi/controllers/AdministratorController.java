@@ -1,15 +1,16 @@
 package com.example.reviewerapi.controllers;
 
-import com.example.reviewerapi.Mock;
+//import com.example.reviewerapi.Mock;
 import com.example.reviewerapi.exceptions.NoPermissionException;
 import com.example.reviewerapi.exceptions.NoUserFoundException;
-import com.example.reviewerapi.exceptions.WrongRoleException;
 import com.example.reviewerapi.responses.UserAndPermissionResponse;
 import com.example.reviewerapi.responses.UserResponse;
+import com.example.reviewerapi.services.AdminService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 public class AdministratorController {
+
+    @Autowired
+    AdminService adminService;
 
     @ApiResponses({
             @ApiResponse(description = "Возврщает пользователя с новыми правами, если имеется доступ", responseCode = "200",
@@ -33,9 +37,9 @@ public class AdministratorController {
             @RequestParam(name = "admin") String admin
     ){
         try {
-            UserAndPermissionResponse userAndPermissionResponse = Mock.changeRole(userLogin, role, admin);
+            UserAndPermissionResponse userAndPermissionResponse = adminService.changeRole(userLogin, role, admin);
             return ResponseEntity.ok().body(userAndPermissionResponse);
-        } catch (WrongRoleException e) {
+        } catch (NoUserFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (NoPermissionException e) {
             return ResponseEntity.status(403).body(e.getMessage());
@@ -54,12 +58,10 @@ public class AdministratorController {
             @RequestParam("admin") String admin
     ){
         try {
-            List<UserResponse> newUserList = Mock.ban(user, admin);
+            List<UserResponse> newUserList = adminService.banUser(user, admin);
             return ResponseEntity.badRequest().body(newUserList);
         } catch (NoPermissionException e) {
             return ResponseEntity.status(403).body(e.getMessage());
-        } catch (NoUserFoundException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -73,6 +75,16 @@ public class AdministratorController {
             @RequestParam("admin") String admin
     ){
 //        return ResponseEntity.ok().body(Mock.getUsersBeside(admin));
-        return ResponseEntity.ok().body(Mock.getUserList());
+        try {
+            return ResponseEntity.ok().body(adminService.getUserList(admin));
+        } catch (NoPermissionException e) {
+            return ResponseEntity.status(403).body(e.getMessage());
+        }
+    }
+
+    @RequestMapping("/init")
+    public ResponseEntity init(){
+        adminService.init();
+        return ResponseEntity.ok().body("asd");
     }
 }

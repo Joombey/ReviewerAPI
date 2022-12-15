@@ -1,31 +1,49 @@
 package com.example.reviewerapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Target;
 
 @Entity
 @Table(name = "reports")
 public class ReportEntity {
     @Id
-    @OneToOne(targetEntity = ReviewEntity.class)
-    @Column(name = "id", nullable = false)
-    private int reviewId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "report_id")
+    private Integer id;
 
-    @Column(name = "report_amount", nullable = false)
-    private int reportAmt;
-    public int getReviewId() {
-        return reviewId;
+    @OneToOne
+    @JsonBackReference
+    @JoinColumn(name = "review_id")
+    private ReviewEntity review;
+
+    @Column(nullable = false, name = "report_amount")
+    private Integer reportAmt;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setReviewId(int reviewId) {
-        this.reviewId = reviewId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public int getReportAmt() {
+    public ReviewEntity getReview() {
+        return review;
+    }
+
+    public void setReview(ReviewEntity review) {
+        this.review = review;
+    }
+
+    public Integer getReportAmt() {
         return reportAmt;
     }
 
-    public void setReportAmt(int reportAmt) {
-        this.reportAmt = reportAmt;
+    public void setReportAmt(Integer report_amount) {
+        this.reportAmt = report_amount;
+    }
+
+    public void newReport(){
+        this.reportAmt += 1;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.reviewerapi.requests;
 
+import com.example.reviewerapi.entities.UserEntity;
 import com.example.reviewerapi.models.embedable.UserId;
 
 public class UserRequest {

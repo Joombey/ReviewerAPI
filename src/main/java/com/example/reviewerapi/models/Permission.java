@@ -1,5 +1,6 @@
 package com.example.reviewerapi.models;
 
+import com.example.reviewerapi.entities.PermissionEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Permission {
@@ -147,8 +148,8 @@ public class Permission {
     }
 
     @JsonIgnore
-    public PermissionModel getPermissionEntityInstance(){
-        return new PermissionModel(
+    public PermissionEntity getPermissionEntityInstance(){
+        return new PermissionEntity(
                 role,
                 reviewMakerAccess,
                 profileAccess,

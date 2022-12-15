@@ -1,6 +1,8 @@
 package com.example.reviewerapi.responses;
 
+import com.example.reviewerapi.entities.UserEntity;
 import com.example.reviewerapi.models.User;
+import com.example.reviewerapi.repositories.UserEntityRepository;
 
 public class UserResponse {
     public String name;
@@ -19,6 +21,13 @@ public class UserResponse {
         this.name = user.getId().login;
         this.city = user.getCity();
         this.role = user.getRole();
+        this.avatar = user.getAvatar();
+    }
+
+    public UserResponse(UserEntity user){
+        this.name = user.getLogin();
+        this.city = user.getCity();
+        this.role = user.getRole().getRole();
         this.avatar = user.getAvatar();
     }
 
