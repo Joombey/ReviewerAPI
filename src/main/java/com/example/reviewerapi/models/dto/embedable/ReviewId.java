@@ -1,6 +1,4 @@
-package com.example.reviewerapi.models.embedable;
-
-import java.util.Objects;
+package com.example.reviewerapi.models.dto.embedable;
 
 public class ReviewId {
     public int id;

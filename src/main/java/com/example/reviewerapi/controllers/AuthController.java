@@ -3,10 +3,9 @@ package com.example.reviewerapi.controllers;
 //import com.example.reviewerapi.Mock;
 import com.example.reviewerapi.exceptions.NoUserFoundException;
 import com.example.reviewerapi.exceptions.UserAlreadyExistException;
-import com.example.reviewerapi.requests.UserRequest;
-import com.example.reviewerapi.responses.ReportsWithReviewsResponse;
-import com.example.reviewerapi.responses.UserAndPermissionResponse;
-import com.example.reviewerapi.models.embedable.UserId;
+import com.example.reviewerapi.models.requests.SignUpUserRequestModel;
+import com.example.reviewerapi.models.responses.UserAndPermissionResponse;
+import com.example.reviewerapi.models.dto.embedable.UserId;
 import com.example.reviewerapi.services.AuthService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,10 +30,8 @@ public class AuthController {
     })
     @PostMapping("/sign-in")
     public ResponseEntity<?> auth(@RequestBody UserId user){
-//        System.out.println(user.login);
         try {
             UserAndPermissionResponse userAndPermissionResponse = authService.auth(user);
-//            System.out.println(userAndPermissionResponse.user.name + " " + userAndPermissionResponse.permission.getRole());
             return ResponseEntity.ok().body(userAndPermissionResponse);
         } catch (NoUserFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -47,7 +44,7 @@ public class AuthController {
             @ApiResponse(description = "Возвращается сообщение о том что такой пользователь уже существует", responseCode = "400")
     })
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@RequestBody UserRequest userRequest){
+    public ResponseEntity<?> signUp(@RequestBody SignUpUserRequestModel userRequest){
         try {
             UserAndPermissionResponse newUser = authService.signUp(userRequest);
             return ResponseEntity.ok().body(newUser);

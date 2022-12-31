@@ -1,6 +1,6 @@
-package com.example.reviewerapi.repositories;
+package com.example.reviewerapi.services.repositories;
 
-import com.example.reviewerapi.entities.ReportEntity;
+import com.example.reviewerapi.models.entities.ReportEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,15 +1,16 @@
-package com.example.reviewerapi.models;
+package com.example.reviewerapi.models.dto;
 
-import com.example.reviewerapi.models.embedable.ReviewId;
+import com.example.reviewerapi.models.dto.embedable.ReviewId;
+import com.example.reviewerapi.models.entities.UserEntity;
 
-public class Review {
+public class ReviewDto {
     public ReviewId id;
     public String reviewTitle;
     public String creationTime;
     public String item;
     public String paragraphs;
 
-    public Review(ReviewId id, String reviewTitle, String creationTime, String item, String paragraphs) {
+    public ReviewDto(ReviewId id, String reviewTitle, String creationTime, String item, String paragraphs) {
         this.id = id;
         this.reviewTitle = reviewTitle;
         this.creationTime = creationTime;

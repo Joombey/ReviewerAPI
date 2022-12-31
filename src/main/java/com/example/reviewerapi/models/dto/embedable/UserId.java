@@ -1,6 +1,4 @@
-package com.example.reviewerapi.models.embedable;
-
-import java.util.Objects;
+package com.example.reviewerapi.models.dto.embedable;
 
 public class UserId {
     public String login;

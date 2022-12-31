@@ -1,4 +1,4 @@
-package com.example.reviewerapi.entities;
+package com.example.reviewerapi.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;

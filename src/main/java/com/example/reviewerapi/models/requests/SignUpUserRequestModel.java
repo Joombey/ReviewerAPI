@@ -1,15 +1,14 @@
-package com.example.reviewerapi.requests;
+package com.example.reviewerapi.models.requests;
 
-import com.example.reviewerapi.entities.UserEntity;
-import com.example.reviewerapi.models.embedable.UserId;
+import com.example.reviewerapi.models.dto.embedable.UserId;
 
-public class UserRequest {
+public class SignUpUserRequestModel {
     public UserId id;
 
     public String city;
     public String avatar;
 
-    public UserRequest(UserId id, String city, String role, String avatar) {
+    public SignUpUserRequestModel(UserId id, String city, String role, String avatar) {
         this.id = id;
         this.city = city;
         this.avatar = avatar;

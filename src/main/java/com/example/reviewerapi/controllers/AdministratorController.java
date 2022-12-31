@@ -3,8 +3,8 @@ package com.example.reviewerapi.controllers;
 //import com.example.reviewerapi.Mock;
 import com.example.reviewerapi.exceptions.NoPermissionException;
 import com.example.reviewerapi.exceptions.NoUserFoundException;
-import com.example.reviewerapi.responses.UserAndPermissionResponse;
-import com.example.reviewerapi.responses.UserResponse;
+import com.example.reviewerapi.models.responses.UserAndPermissionResponse;
+import com.example.reviewerapi.models.dto.UserDto;
 import com.example.reviewerapi.services.AdminService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,7 +26,7 @@ public class AdministratorController {
 
     @ApiResponses({
             @ApiResponse(description = "Возврщает пользователя с новыми правами, если имеется доступ", responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = UserResponse.class, description = "Пользователь и его разрешения"))),
+                    content = @Content(schema = @Schema(implementation = UserDto.class, description = "Пользователь и его разрешения"))),
             @ApiResponse(description = "Возвращается сообщение о том что прав на действия нет", responseCode = "403"),
             @ApiResponse(description = "Возвращается сообщение о том такого пользователья нет", responseCode = "400")
     })
@@ -48,7 +48,7 @@ public class AdministratorController {
 
     @ApiResponses({
             @ApiResponse(description = "Возврщает список пользователей, если имеется доступ", responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = UserResponse.class, description = "Список пользователей"))),
+                    content = @Content(schema = @Schema(implementation = UserDto.class, description = "Список пользователей"))),
             @ApiResponse(description = "Возвращается сообщение о том что прав на действия нет", responseCode = "403"),
             @ApiResponse(description = "Возвращается сообщение о том такого пользователья нет", responseCode = "400")
     })
@@ -58,7 +58,7 @@ public class AdministratorController {
             @RequestParam("admin") String admin
     ){
         try {
-            List<UserResponse> newUserList = adminService.banUser(user, admin);
+            List<UserAndPermissionResponse> newUserList = adminService.banUser(user, admin);
             return ResponseEntity.badRequest().body(newUserList);
         } catch (NoPermissionException e) {
             return ResponseEntity.status(403).body(e.getMessage());
@@ -67,7 +67,7 @@ public class AdministratorController {
 
     @ApiResponses({
             @ApiResponse(description = "Возврщает список пользователей, если имеется доступ", responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = UserResponse.class, description = "Пользователь и его разрешения"))),
+                    content = @Content(schema = @Schema(implementation = UserDto.class, description = "Пользователь и его разрешения"))),
             @ApiResponse(description = "Возвращается сообщение о том что прав на действия нет", responseCode = "400")
     })
     @GetMapping("/user-list")

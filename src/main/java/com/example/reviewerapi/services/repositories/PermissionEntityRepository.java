@@ -1,6 +1,6 @@
-package com.example.reviewerapi.repositories;
+package com.example.reviewerapi.services.repositories;
 
-import com.example.reviewerapi.entities.PermissionEntity;
+import com.example.reviewerapi.models.entities.PermissionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PermissionEntityRepository extends JpaRepository<PermissionEntity, String> {

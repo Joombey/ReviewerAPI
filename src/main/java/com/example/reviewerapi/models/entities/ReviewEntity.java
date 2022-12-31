@@ -1,7 +1,6 @@
-package com.example.reviewerapi.entities;
+package com.example.reviewerapi.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
