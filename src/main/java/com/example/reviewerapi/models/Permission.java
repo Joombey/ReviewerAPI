@@ -1,6 +1,6 @@
 package com.example.reviewerapi.models;
 
-import com.example.reviewerapi.entities.PermissionEntity;
+import com.example.reviewerapi.models.entities.PermissionEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Permission {

@@ -1,14 +1,12 @@
 package com.example.reviewerapi.services;
 
-import com.example.reviewerapi.entities.UserEntity;
+import com.example.reviewerapi.models.entities.UserEntity;
 import com.example.reviewerapi.exceptions.NoPermissionException;
 import com.example.reviewerapi.exceptions.NoUserFoundException;
 import com.example.reviewerapi.models.Permission;
-import com.example.reviewerapi.repositories.PermissionEntityRepository;
-import com.example.reviewerapi.repositories.UserEntityRepository;
-import com.example.reviewerapi.responses.UserAndPermissionResponse;
-import com.example.reviewerapi.responses.UserResponse;
-import com.example.reviewerapi.typeconverter.EntityTypeConverter;
+import com.example.reviewerapi.services.repositories.PermissionEntityRepository;
+import com.example.reviewerapi.services.repositories.UserEntityRepository;
+import com.example.reviewerapi.models.responses.UserAndPermissionResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +25,7 @@ public class AdminService {
         Optional<UserEntity> adminInstance = userRepo.findById(admin);
         Optional<UserEntity> userInstance = userRepo.findById(user);
 
-        if (adminInstance.isPresent() || !userInstance.isPresent()) {
+        if (adminInstance.isPresent()) {
             if(adminInstance.get().getRole().getRoleChangerAccess()){
                 userInstance.get().setRole(permissionRepo.findById(newRole).get());
                 return new UserAndPermissionResponse(userRepo.save(userInstance.get()));
@@ -36,13 +34,13 @@ public class AdminService {
         }throw new NoUserFoundException();
     }
 
-    public List<UserResponse> banUser(String user, String admin) throws NoPermissionException{
+    public List<UserAndPermissionResponse> banUser(String user, String admin) throws NoPermissionException{
 
         Optional<UserEntity> adminInstance = userRepo.findById(admin);
 
         if (adminInstance.isPresent() && adminInstance.get().getRole().getRoleChangerAccess()){
             userRepo.deleteById(user);
-            return userRepo.findAll().stream().map(userInstance -> new UserResponse(userInstance)).toList();
+            return userRepo.findAll().stream().map(userEntity -> new UserAndPermissionResponse(userEntity)).toList();
         }throw new NoPermissionException();
     }
 
@@ -57,9 +55,12 @@ public class AdminService {
         userRepo.save(new UserEntity("moder", "moder", "MOSCOW", "ASDASD", Permission.MODER.getPermissionEntityInstance()));
     }
 
-    public List<UserResponse> getUserList(String adminName) throws NoPermissionException {
+    public List<UserAndPermissionResponse> getUserList(String adminName) throws NoPermissionException {
         if (userRepo.existsByLoginAndRole_Role(adminName, "admin")){
-            return EntityTypeConverter.toUserResponseList(userRepo.findAll());
+            List<UserAndPermissionResponse> users = userRepo.findAll().stream().map(
+                    userEntity -> new UserAndPermissionResponse(userEntity)).toList();
+            return users;
+//            return EntityTypeConverter.toUserResponseList(userRepo.findAll());
         }throw new NoPermissionException();
     }
 }
