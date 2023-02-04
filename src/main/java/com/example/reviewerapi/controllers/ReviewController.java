@@ -1,6 +1,5 @@
 package com.example.reviewerapi.controllers;
 
-//import com.example.reviewerapi.Mock;
 import com.example.reviewerapi.exceptions.NoUserFoundException;
 import com.example.reviewerapi.models.dto.ReviewDto;
 import com.example.reviewerapi.models.dto.embedable.ReviewId;
@@ -10,9 +9,14 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 @ControllerAdvice
@@ -58,4 +62,18 @@ public class ReviewController {
         List<ReportRequestModel> newReportList = reviewService.report(reviewId);
         return ResponseEntity.ok().body(newReportList);
     }
+
+    @RequestMapping(value = "/uploadTesting", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity uploadHandling(@RequestPart("files") List<MultipartFile> model){
+        model.stream().map(m->{
+            Path file = Path.of("G:\\ + " + m.getOriginalFilename());
+            try {
+                Files.write(file, m.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return m;
+        }).toList();
+        return ResponseEntity.ok().body("asd");
+    };
 }
